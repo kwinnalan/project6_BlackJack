@@ -14,14 +14,12 @@ class GameEnviroment {
 
     constructor(numDecks, hasJokers) {
             this.#createDeck(numDecks, hasJokers);
-        console.log();//
             this.#setPlayers();
 
         while(this.#deck[0].length > 3){
             this.#setBoard();
-            this.#dealCard();
-            // this.#settleUp();
-            // this.#dealCards();
+            this.#deal();
+            this.#settleUp();
             // this.#play();
             //this.#displayGameData();
         }
@@ -41,30 +39,16 @@ class GameEnviroment {
         }
     }
 
-    #getName(){
-    let name;
 
-    name = PROMPT.question (`\nPlayer, please enter you'r name: `);
-
-    return name;
-    }
-
-   #getCoins(){
-       let coins;
-
-       coins = PROMPT.question (`\nPlayer, enter how many coins: `);
-
-       return coins;
-   }
 
     #setPlayers() {
         const NUM_PLAYERS = 3;
 
         for (let i = 0; i < NUM_PLAYERS; i++) {
-          let name = this.#getName();
-          let coins = this.#getCoins();
+          // let name = this.#getName();
+          // let coins = this.#getCoins();
 
-            this.#players.push(new PLAYER(name, coins));
+            this.#players.push(new PLAYER());
         }
         console.log(this.#players);
     }
@@ -79,7 +63,7 @@ class GameEnviroment {
     }
 
 
-    #dealCard() {
+    #deal() {
         let card = (this.#deck[0].shift());
         let win;
 
@@ -97,14 +81,14 @@ class GameEnviroment {
         console.log('c:', card, 'b:', this.#board, 'w:', win);
     }
 
-    // #settleUp(){
-    //
-    //
-    //     let bet = 1;
-    //     //
-    //     // this.players[0].coins = this.players[0].coins;
-    //     // console.log(this.players[0].coins);
-    // }
+    #settleUp(){
+
+
+        let bet = 1;
+        //
+        // this.players[0].coins = this.players[0].coins;
+        // console.log(this.players[0].coins);
+    }
 
 
 
