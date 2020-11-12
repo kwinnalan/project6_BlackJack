@@ -1,9 +1,14 @@
 "use strict";
 
 class Player {
-    #coins = 100;
-    constructor() {
+
+    constructor(name, coins) {
 console.log('player created');
+this.name = name;
+this.coins = coins;
+    }
+    takeCoins(numCoins){
+        this.coins = (this.coins - numCoins);
     }
 
 }
