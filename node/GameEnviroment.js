@@ -20,19 +20,21 @@ class GameEnviroment {
         this.#whoGosFirst();
         this.#createDeck(numDecks, hasJokers);
 
-        while (this.#deck[0].length > 3) {
-            this.#setBoard();
-            this.#displayBoard();
-            this.#padPot();
-            this.#displayPot();
-            this.#bet();
-            this.#deal();
-            let win = this.#calcWin()
-            this.#displayCards();
-            this.#settleUp(win);
-            this.#nextPlayer();
-            this.#displayGameData();
-        }
+        while (this.#checkGo() !== 0){
+                this.#padPot();
+                this.#setBoard();
+                this.#checkBoard();
+                this.#displayBoard();
+                this.#displayPot();
+                this.#bet();
+                this.#deal();
+                let win = this.#calcWin()
+                this.#displayCards();
+                this.#settleUp(win);
+                this.#nextPlayer();
+                this.#displayGameData();
+                this.#newDeck();
+            }
     }
 
     #createDeck(numDecks, hasJokers) {
@@ -57,8 +59,10 @@ class GameEnviroment {
 
     #createPot() {
         for (let i = 0; i < this.#players.length; i++) {
-            this.#players[i].takeCoins(1);
-            this.#pot = this.#pot + 1;
+            if (this.#players[i].coins > 0) {
+                this.#players[i].takeCoins(1);
+                this.#pot = this.#pot + 1;
+            }
         }
     }
 
@@ -73,12 +77,41 @@ class GameEnviroment {
                 this.#players[i].currPlayer = true;
             }
         }
-        console.log(this.#players);
     }
 
     #setBoard() {
         for (let i = 0; i < 2; i++) {
             this.#board[i] = (this.#deck[0].shift());
+        }
+    }
+
+    #checkBoard() {
+        if (this.#board[0].get('value') === this.#board[1].get('value')) {
+            this.#displayBoard();
+            console.log(`Congrats! Matching Board gets you 2 coins`);
+            for (let i = 0; i < NUM_PLAYERS; i++) {
+                if (this.#players[i].currPlayer === true) {
+                    this.#players[i].coins = this.#players[i].coins + 2;
+                    this.#pot = this.#pot - 2;
+                }
+            }
+            this.#nextPlayer();
+            this.#padPot();
+            this.#setBoard();
+            this.#displayGameData()
+        }else if (this.#board[0].get('value') === (this.#board[1].get('value')) - 1 || this.#board[0].get('value') === (this.#board[1].get('value')) + 1) {
+            this.#displayBoard();
+            console.log(`Sorry, Consecutive cards on the board looses you a coin to the Pot`);
+            for (let i = 0; i < NUM_PLAYERS; i++) {
+                if (this.#players[i].currPlayer === true) {
+                    this.#players[i].takeCoins(1);
+                    this.#pot = this.#pot + 1;
+                }
+            }
+            this.#nextPlayer();
+            this.#padPot();
+            this.#setBoard();
+            this.#displayGameData()
         }
     }
 
@@ -93,17 +126,31 @@ class GameEnviroment {
     }
 
     #padPot() {
-        if (this.#pot < 1) {
+        if (this.#pot <= 2) {
+            console.log(`The pot is too low...`);
             this.#createPot();
+            console.log(`The pot has been refilled`);
+            this.#displayGameData();
         }
     }
 
     #bet() {
         let input;
-        for (let i = 0; i < NUM_PLAYERS; i++) {
-            if (this.#players[i].currPlayer === true) {
-                input = (PROMPT.question(`Player ${this.#players[i].name}, enter how many coins to bet (must be between 1 and the total Pot): `));
-                this.#currBet = parseInt(input);
+        let betGood = 0;
+
+        while (betGood !== 1) {
+            for (let i = 0; i < NUM_PLAYERS; i++) {
+                if (this.#players[i].currPlayer === true) {
+                    input = (PROMPT.question(`Player ${this.#players[i].name}, enter how many coins to bet (must be between 1 and the total Pot): `));
+                    this.#currBet = parseInt(input);
+                    if (this.#currBet <= this.#pot && this.#currBet <= this.#players[i].coins && this.#currBet > 0){
+                        betGood = 1;
+                    }else if (this.#players[i].coins<this.#currBet) {
+                        console.log(`${this.#players[i].name} You Do Not Have Enough Coins! Try Again."`);
+                    }else {
+                        console.log("Bet must be between 1 and the Pot. Try again.");
+                    }
+                }
             }
         }
     }
@@ -115,9 +162,7 @@ class GameEnviroment {
     #calcWin() {
         let win;
 
-        if (this.#board[0].get('value') === this.#board[1].get('value')) {
-            win = 3;
-        } else if (this.#board[0].get('value') === this.#card.get('value') || this.#board[1].get('value') === this.#card.get('value')) {
+        if (this.#board[0].get('value') === this.#card.get('value') || this.#board[1].get('value') === this.#card.get('value')) {
             win = 0;
         } else if (this.#board[0].get('value') > this.#board[1].get('value') && this.#card.get('value') > this.#board[1].get('value') && this.#card.get('value') < this.#board[0].get('value')) {
             win = 2;
@@ -157,19 +202,47 @@ class GameEnviroment {
         for (let i = 0; i < NUM_PLAYERS; i++) {
             if (this.#players[i].currPlayer === true) {
                 this.#players[i].currPlayer = false;
-                if (i === 2) {
-                    this.#players[0].currPlayer = true;
-                    i = 3;
-                } else {
+                if (i === this.#players.length - 1) {
+                    if (this.#players[0].coins > 0) {
+                        this.#players[0].currPlayer = true;
+                        i = NUM_PLAYERS;
+                    } else if (this.#players[1].coins > 0){
+                        this.#players[1].currPlayer = true;
+                        i = NUM_PLAYERS;
+                    }else {
+                        this.#players[2].currPlayer = true;
+                        i = NUM_PLAYERS;
+                    }
+                } else if (this.#players[i + 1].coins > 0){
                     this.#players[i + 1].currPlayer = true;
-                    i = 3;
+                    i = NUM_PLAYERS;
+                } else if(this.#players[i + 2].coins > 0) {
+                    this.#players[i + 2].currPlayer = true;
+                    i = NUM_PLAYERS;
+                }else {
+                    this.#players[i + 3].currPlayer = true;
+                    i = NUM_PLAYERS;
                 }
             }
         }
     }
 
     #displayGameData() {
-        console.log(this.#players)
+        console.log(this.#players);
+    }
+    #newDeck() {
+        if (this.#deck[0].length < 3){
+            this.#deck[0] = this.#createDeck(1, false);
+        }
+    }
+    #checkGo() {
+        let go = 0;
+        for (let i = 0; i < NUM_PLAYERS; i++) {
+            if (this.#players[i].coins >= 2){
+                go = 1;
+            }
+        }
+        return go;
     }
 }
 module.exports = GameEnviroment;

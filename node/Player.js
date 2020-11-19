@@ -22,7 +22,11 @@ console.log('player created');
 
     #getCoins(){
         let coins;
-        coins = PROMPT.question (`Player, enter how many coins: `);
+        let input;
+        do{
+            input = PROMPT.question(`Player, enter how many coins (must be between 5 and 1,000): `);
+            coins = parseInt(input);
+        }while(coins < 5 || coins > 1000 || isNaN(input));
         return coins;
     }
     takeCoins(numCoins){
