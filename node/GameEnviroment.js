@@ -20,15 +20,16 @@ class GameEnviroment {
         this.#whoGosFirst();
         this.#createDeck(numDecks, hasJokers);
 
-        while (this.#checkGo() !== 0){
+        while (this.#checkGo() === true){
                 this.#padPot();
+                this.#quitOrBet();
                 this.#setBoard();
                 this.#checkBoard();
                 this.#displayBoard();
                 this.#displayPot();
                 this.#bet();
                 this.#deal();
-                let win = this.#calcWin()
+                let win = this.#calcWin();
                 this.#displayCards();
                 this.#settleUp(win);
                 this.#nextPlayer();
@@ -97,6 +98,7 @@ class GameEnviroment {
             }
             this.#nextPlayer();
             this.#padPot();
+            this.#quitOrBet();
             this.#setBoard();
             this.#displayGameData()
         }else if (this.#board[0].get('value') === (this.#board[1].get('value')) - 1 || this.#board[0].get('value') === (this.#board[1].get('value')) + 1) {
@@ -110,6 +112,7 @@ class GameEnviroment {
             }
             this.#nextPlayer();
             this.#padPot();
+            this.#quitOrBet();
             this.#setBoard();
             this.#displayGameData()
         }
@@ -131,6 +134,26 @@ class GameEnviroment {
             this.#createPot();
             console.log(`The pot has been refilled`);
             this.#displayGameData();
+        }
+    }
+
+    #quitOrBet() {
+        for (let i = 0; i < NUM_PLAYERS; i++) {
+            if (this.#players[i].currPlayer === true) {
+                let input;
+                input = (PROMPT.question(`\nPlayer ${this.#players[i].name}, would you like to continue and bet or quit? (enter q to quit or any key to continue): `));
+                if (input === 'q' || input === 'Q') {
+                    this.#players[i].leftWith = this.#players[i].coins;
+                    this.#players[i].coins = 0;
+                    this.#nextPlayer();
+                    this.#displayGameData();
+                    if (this.#checkGo() === true) {
+                        this.#quitOrBet();
+                    }else {
+                        this.#endGame();
+                    }
+                }
+            }
         }
     }
 
@@ -200,6 +223,17 @@ class GameEnviroment {
 
     #nextPlayer() {
         for (let i = 0; i < NUM_PLAYERS; i++) {
+            let num = 0;
+            for (let x = 0; x < NUM_PLAYERS; x++) {
+                if (this.#players[x].coins < 1) {
+                    num++;
+                }
+                if (num === NUM_PLAYERS - 1) {
+                    return;
+                }
+            }
+        }
+        for (let i = 0; i < NUM_PLAYERS; i++) {
             if (this.#players[i].currPlayer === true) {
                 this.#players[i].currPlayer = false;
                 if (i === this.#players.length - 1) {
@@ -209,26 +243,36 @@ class GameEnviroment {
                     } else if (this.#players[1].coins > 0){
                         this.#players[1].currPlayer = true;
                         i = NUM_PLAYERS;
-                    }else {
+                    } else /*if (this.#players[2].coins > 0)*/ {
                         this.#players[2].currPlayer = true;
                         i = NUM_PLAYERS;
-                    }
+                    }//else {
+                    //     this.#players[3].currPlayer = true;
+                    //     i = NUM_PLAYERS;
+                    // }
                 } else if (this.#players[i + 1].coins > 0){
                     this.#players[i + 1].currPlayer = true;
                     i = NUM_PLAYERS;
-                } else if(this.#players[i + 2].coins > 0) {
+                } else /*if(this.#players[i + 2].coins > 0)*/ {
                     this.#players[i + 2].currPlayer = true;
                     i = NUM_PLAYERS;
-                }else {
-                    this.#players[i + 3].currPlayer = true;
-                    i = NUM_PLAYERS;
-                }
+                }//else {
+                //     this.#players[i + 3].currPlayer = true;
+                //     i = NUM_PLAYERS;
+                // }
             }
         }
     }
 
     #displayGameData() {
-        console.log(this.#players);
+        for (let i = 0; i < NUM_PLAYERS; i++) {
+            if (this.#players[i].coins > 0){
+            console.log(`\n${this.#players[i].name} started with ${this.#players[i].startCoins} coins and has ${this.#players[i].coins} coins left`);
+            }else {
+                console.log(`\n${this.#players[i].name} started with ${this.#players[i].startCoins} coins and left with ${this.#players[i].leftWith} `);
+            }
+        }
+       this.#displayPot();
     }
     #newDeck() {
         if (this.#deck[0].length < 3){
@@ -236,13 +280,22 @@ class GameEnviroment {
         }
     }
     #checkGo() {
-        let go = 0;
+        let go = false;
         for (let i = 0; i < NUM_PLAYERS; i++) {
             if (this.#players[i].coins >= 2){
-                go = 1;
+                go = true;
+                return go;
             }
         }
+        this.#endGame();
         return go;
     }
+
+    #endGame() {
+        console.log(`Game is over...`);
+        this.#displayGameData();
+    }
 }
+
+
 module.exports = GameEnviroment;

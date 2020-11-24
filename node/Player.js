@@ -8,6 +8,7 @@ class Player {
     constructor() {
         this.name = this.#getName();
         this.coins = this.#getCoins();
+        this.startCoins = this.coins;
         this.startCard = new CARD(false).getCard();
         this.startCard = this.startCard.get('value');
         this.currPlayer = false;
@@ -16,7 +17,14 @@ console.log('player created');
 
     #getName(){
         let name;
-        name = PROMPT.question (`\nPlayer, please enter you'r name: `);
+        //let re = /[A-Za-z_]\\w{7,29}$/;
+        // try {
+            name = PROMPT.question (`\nPlayer, please enter you'r name: `);
+        // } catch () {
+
+        // } finally {
+        //     this.#getName();
+        // }
         return name;
     }
 
