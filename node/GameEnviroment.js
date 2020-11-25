@@ -13,6 +13,7 @@ class GameEnviroment {
     #pot = 0;
     #currBet = 0;
     #card;
+    #round = 1;
 
     constructor(numDecks, hasJokers) {
         this.#setPlayers();
@@ -139,9 +140,9 @@ class GameEnviroment {
 
     #quitOrBet() {
         for (let i = 0; i < NUM_PLAYERS; i++) {
-            if (this.#players[i].currPlayer === true) {
+            if (this.#players[i].currPlayer === true && this.#round > 2) {
                 let input;
-                input = (PROMPT.question(`\nPlayer ${this.#players[i].name}, would you like to continue and bet or quit? (enter q to quit or any key to continue): `));
+                input = (PROMPT.question(`\nPlayer ${this.#players[i].name}, would you like to continue and bet or quit? (enter q to quit or any other key to continue): `));
                 if (input === 'q' || input === 'Q') {
                     this.#players[i].leftWith = this.#players[i].coins;
                     this.#players[i].coins = 0;
@@ -149,6 +150,7 @@ class GameEnviroment {
                     this.#displayGameData();
                     if (this.#checkGo() === true) {
                         this.#quitOrBet();
+                        return;
                     }else {
                         this.#endGame();
                     }
@@ -168,6 +170,10 @@ class GameEnviroment {
                     this.#currBet = parseInt(input);
                     if (this.#currBet <= this.#pot && this.#currBet <= this.#players[i].coins && this.#currBet > 0){
                         betGood = 1;
+                        if(this.#currBet === this.#pot){
+                            console.log(`You Bet The Pot! \nGood Luck!!`);
+                            this.#players[i].leftWith = 0;
+                        }
                     }else if (this.#players[i].coins<this.#currBet) {
                         console.log(`${this.#players[i].name} You Do Not Have Enough Coins! Try Again."`);
                     }else {
@@ -223,43 +229,21 @@ class GameEnviroment {
 
     #nextPlayer() {
         for (let i = 0; i < NUM_PLAYERS; i++) {
-            let num = 0;
-            for (let x = 0; x < NUM_PLAYERS; x++) {
-                if (this.#players[x].coins < 1) {
-                    num++;
-                }
-                if (num === NUM_PLAYERS - 1) {
-                    return;
+            if (this.#players[i].currPlayer === true) {
+                this.#players[i].currPlayer = false;
+                this.#round = this.#round + (1 / NUM_PLAYERS);
+                if (i === this.#players.length - 1) {
+                    this.#players[0].currPlayer = true;
+                    i = NUM_PLAYERS;
+                } else {
+                    this.#players[i + 1].currPlayer = true;
+                    i = NUM_PLAYERS;
                 }
             }
         }
         for (let i = 0; i < NUM_PLAYERS; i++) {
-            if (this.#players[i].currPlayer === true) {
-                this.#players[i].currPlayer = false;
-                if (i === this.#players.length - 1) {
-                    if (this.#players[0].coins > 0) {
-                        this.#players[0].currPlayer = true;
-                        i = NUM_PLAYERS;
-                    } else if (this.#players[1].coins > 0){
-                        this.#players[1].currPlayer = true;
-                        i = NUM_PLAYERS;
-                    } else /*if (this.#players[2].coins > 0)*/ {
-                        this.#players[2].currPlayer = true;
-                        i = NUM_PLAYERS;
-                    }//else {
-                    //     this.#players[3].currPlayer = true;
-                    //     i = NUM_PLAYERS;
-                    // }
-                } else if (this.#players[i + 1].coins > 0){
-                    this.#players[i + 1].currPlayer = true;
-                    i = NUM_PLAYERS;
-                } else /*if(this.#players[i + 2].coins > 0)*/ {
-                    this.#players[i + 2].currPlayer = true;
-                    i = NUM_PLAYERS;
-                }//else {
-                //     this.#players[i + 3].currPlayer = true;
-                //     i = NUM_PLAYERS;
-                // }
+            if (this.#players[i].currPlayer === true && this.#players[i].coins < 1) {
+                this.#nextPlayer();
             }
         }
     }

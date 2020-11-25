@@ -12,19 +12,13 @@ class Player {
         this.startCard = new CARD(false).getCard();
         this.startCard = this.startCard.get('value');
         this.currPlayer = false;
-console.log('player created');
+console.log(`player created! `);
+        console.log(`${this.startCard}`)
     }
 
     #getName(){
         let name;
-        //let re = /[A-Za-z_]\\w{7,29}$/;
-        // try {
             name = PROMPT.question (`\nPlayer, please enter you'r name: `);
-        // } catch () {
-
-        // } finally {
-        //     this.#getName();
-        // }
         return name;
     }
 
