@@ -1,0 +1,29 @@
+div.card {
+    max-width:20%;
+}
+body h1 {
+    text-align: center;
+}
+body p {
+    text-align: center;
+}
+body h2 {
+
+}
+@media screen and (max-width: 575px) {
+    div.card {
+        min-width: 40%;
+    }
+    div.bg-success {
+        float: left;
+        min-width: 40%;
+    }
+
+    div.card-body {
+        padding: 3px;
+    }
+    body h2 {
+        font-size: medium;
+    }
+}
+

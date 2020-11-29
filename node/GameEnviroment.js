@@ -276,6 +276,7 @@ class GameEnviroment {
     }
 
     #endGame() {
+        console.log(`No one left has any coins! `)
         console.log(`Game is over...`);
         this.#displayGameData();
     }

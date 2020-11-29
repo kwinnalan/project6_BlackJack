@@ -13,7 +13,7 @@ class Player {
         this.startCard = this.startCard.get('value');
         this.currPlayer = false;
 console.log(`player created! `);
-        console.log(`${this.startCard}`)
+        console.log(`Card for whoGoesFirst: ${this.startCard}`);
     }
 
     #getName(){
