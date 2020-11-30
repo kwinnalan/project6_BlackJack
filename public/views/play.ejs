@@ -1,0 +1,40 @@
+<%- include ("_header") -%>
+
+<body>
+
+<h1>inBetween!</h1>
+<p>This is a card game where your card must be "inBetween" the two board cards!.</p>
+<div class="card-deck">
+<div class="card">
+    <img class="card-img-top" src="/public/images/cards/cardBack.png" alt="Card image">
+    <div class="card-body">
+        <p>Board Card</p>
+    </div>
+</div>
+
+<div class="card">
+    <img class="card-img-top" src="/public/images/cards/cardBack.png" alt="Card image">
+    <div class="card-body">
+        <p>Your Card</p>
+    </div>
+</div>
+<div class="card">
+    <img class="card-img-top" src="/public/images/cards/cardBack.png" alt="Card image">
+    <div class="card-body">
+        <p>Board Card</p>
+    </div>
+</div>
+        <div class="card bg-success">
+            <div class="card-body text-center">
+                <p class="card-text">Your Coins =</p>
+            </div>
+            <p>Pot=</p>
+        </div>
+    </div>
+<h2>Player it is your turn! Bet or quit?</h2>
+<button id = "betBtn" type="button" class="btn btn-success">Bet</button>
+<button id = "quitBtn" type="button" class="btn btn-danger">Quit</button>
+<script src="/public/javascripts/main.js" type="module" ></script>
+<noscript><h1>-= JavaScript Required =-</h1></noscript>
+
+<%- include ("_footer") -%>

@@ -1,0 +1,28 @@
+{
+  "name": "project5",
+  "version": "1.0.0",
+  "description": "App to play inBetween",
+  "main": "main.js",
+  "dependencies": {
+    "ejs": "^3.1.5",
+    "express": "^4.17.1",
+    "path": "^0.12.7",
+    "readline-sync": "^1.4.10",
+    "server": "^1.0.31"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kwinnalan/Project5-inBetween.git"
+  },
+  "author": "Kwinn Danforth",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kwinnalan/Project5-inBetween/issues"
+  },
+  "homepage": "https://github.com/kwinnalan/Project5-inBetween#readme"
+}

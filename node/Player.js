@@ -18,7 +18,8 @@ console.log(`player created! `);
 
     #getName(){
         let name;
-            name = PROMPT.question (`\nPlayer, please enter you'r name: `);
+        name = Player;
+            //name = PROMPT.question (`\nPlayer, please enter you'r name: `);
         return name;
     }
 
@@ -26,7 +27,8 @@ console.log(`player created! `);
         let coins;
         let input;
         do{
-            input = PROMPT.question(`Player, enter how many coins (must be between 5 and 1,000): `);
+            input=10;
+            //input = PROMPT.question(`Player, enter how many coins (must be between 5 and 1,000): `);
             coins = parseInt(input);
         }while(coins < 5 || coins > 1000 || isNaN(input));
         return coins;
