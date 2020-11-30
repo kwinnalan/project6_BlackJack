@@ -1,4 +1,4 @@
-# Project4_Inbetween
+# Project5_Inbetween
 
 In-Between is not very popular at casinos, but is often played in home Poker games as a break from Poker itself. The rules below are for the home game, which is easily adaptable for casino play.
 
