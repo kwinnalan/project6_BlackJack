@@ -3,43 +3,64 @@
 <body>
 
 <h1>inBetween!</h1>
-<p>This is a card game where your card must be "inBetween" the two board cards!.</p>
+<p>This is a card game where your card must be "inBetween" the two board cards!</p>
 <div class="card-deck">
 <div class="card">
-    <img class="card-img-top" src="/public/images/cards/cardBack.png" alt="Card image">
+    <img class="card-img-top" id= "boardCard1" src="/public/images/cards/cardBack.png" alt="Card image">
     <div class="card-body">
         <p>Board Card</p>
     </div>
 </div>
 
 <div class="card">
-    <img class="card-img-top" src="/public/images/cards/cardBack.png" alt="Card image">
+    <img class="card-img-top" id= "yourCard" src="/public/images/cards/cardBack.png" alt="Card image">
     <div class="card-body">
-        <p>Your Card</p>
+        <p id= "yourCard">Your Card</p>
     </div>
 </div>
 <div class="card">
-    <img class="card-img-top" src="/public/images/cards/cardBack.png" alt="Card image">
+    <img class="card-img-top" id= "boardCard2" src="/public/images/cards/cardBack.png" alt="Card image">
     <div class="card-body">
         <p>Board Card</p>
     </div>
 </div>
         <div class="card bg-success">
             <div class="card-body text-center">
-                <p class="card-text">Your Coins =</p>
+                <p id="greenCardText">in inBetween each payer gets a chance to bet if their card is going to be between the two board cards</p>
             </div>
-            <p>Pot=</p>
+            <p id= "greenCardTextBottom">Needs 3 players, would you like to play?</p>
         </div>
     </div>
+
+<button id = "playBtn" type="button" class="btn btn-success">Play</button>
+
+<div id="playerInputs" style="display:none">
 <h2>Player Enter your Info: </h2>
- <div class="form-group">
-  <label for="usr">Name:</label>
-  <input type="text" class="form-control" id="usr">
+<form >
+  Name: <input type="text" name="name" id = "nameInput"><br>
+  Coins: <input type="number" name="coins" id= "coinsInput"><br><br>
+<button id = "submitBtn" type="button" class="btn btn-success">Enter</button>
+</form>
+<div class="progress">
+  <div class="progress-bar progress-bar-striped" id= "progressBar" style="width:0%"></div>
 </div>
+</div>
+
+ <div id="betOrQuit" style= "display: none">
+<h2>Player it is your turn! Bet or quit?</h2>
+<button id = "betBtn" type="button" class="btn btn-success">Bet</button>
+<button id = "quitBtn" type="button" class="btn btn-danger">Quit</button>
+</div>
+
+<div id = "enterBet" style = "display: none">
+<h2>Enter Amount of Bet (must be at least 1 and less total pot)</h2>
 <div class="form-group">
-  <label for="coins">Coins:</label>
-  <input type="text" class="form-control" id="coins">
+  <label for="betCoins">Coins:</label>
+  <input type="text" class="form-control" id="betCoins">
+  <button id = "betCoinsBtn" type="button" class="btn btn-success">Bet Coins</button>
 </div>
+</div>
+
 <script src="/public/javascripts/main.js" type="module" ></script>
 <noscript><h1>-= JavaScript Required =-</h1></noscript>
 

@@ -1,38 +1,49 @@
 "use strict";
-
+import GameEnviroment from "./GameEnviroment.js";
 /**
  * Event handling class
  */
+
 export default class EventHandler {
 
     /**
      * @constructor
      */
     constructor() {
+
+        EventHandler.#handlePlayButton();
         EventHandler.#handleBetButton();
-        EventHandler.#handleQuitButton();
+
     }
 
     /**
      * @returns {void}
      */
-    static #handleBetButton() {
-        document.getElementById('betBtn').addEventListener('click', async function() {
-            document.getElementById(`resultText`).innerText = await EventHandler.performFetch();
-            setTimeout(function() {
-                document.getElementById(`resultText`).innerText = '\u00A0'; //inserts a text space so element doesn't roll up
-            }, 1000);
+
+    static #handlePlayButton() {
+        document.getElementById('playBtn').addEventListener('click', async function() {
+             document.getElementById(`playBtn`).style = "display: none";
+            new GameEnviroment(1,false);
         });
     }
 
+    static #handleBetButton() {
+        document.getElementById('betBtn').addEventListener('click', async function() {
+            document.getElementById(`betOrQuit`).style = "display: none";
+            document.getElementById(`enterBet`).style = "dislay: block";
+        });
+    }
+
+
+
     /**
      * @returns {void}
      */
-    static #handleQuitButton() {
-        let dropArea = document.getElementById('quitBtn');
-        let dragArea = document.getElementById('quitBtn');
+    static #handleDropArea() {
+        let dropArea = document.getElementById('dropArea');
+        let dragArea = document.getElementById('dragArea');
 
-        quitBtn.addEventListener('drop', function(event) {
+        dropArea.addEventListener('drop', function(event) {
             EventHandler.#preventDefaults(event);
             event.dataTransfer.dropEffect = 'copy';
             let files = event.dataTransfer.files;
@@ -48,19 +59,34 @@ export default class EventHandler {
             }
         }, false);
 
-        quitBtn.addEventListener('dragover', function(event) {
+        dropArea.addEventListener('dragover', function(event) {
             EventHandler.#preventDefaults(event);
             event.dataTransfer.dropEffect = 'copy';
             dragArea.style.opacity = '1';
         }, false);
 
-        quitBtn.addEventListener('dragleave', function(event) {
+        dropArea.addEventListener('dragleave', function(event) {
             EventHandler.#preventDefaults(event);
             event.dataTransfer.dropEffect = 'copy';
             dragArea.style.opacity = '0.6';
         }, false);
 
     }
+
+    /**
+     * For disabling enter key
+     * @returns {void}
+     */
+    // static #stopEnterKey() {
+    //     document.addEventListener('keypress', function(event) {
+    //         const theKey = event.key;
+    //         if (theKey.length > 1) {
+    //             if (theKey === 'Enter') {
+    //                 EventHandler.#preventDefaults(event);
+    //             }
+    //         }
+    //     });
+    // }
 
     /**
      * For disabling default browser drag/drop behavior

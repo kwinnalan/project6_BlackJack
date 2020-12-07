@@ -1,3 +1,4 @@
+
 div.card {
     max-width:20%;
 }
@@ -8,7 +9,7 @@ body p {
     text-align: center;
 }
 body h2 {
-
+    font-size: medium;
 }
 @media screen and (max-width: 575px) {
     div.card {

@@ -6,7 +6,7 @@ const PROMPT = require('readline-sync');
 
 const NUM_PLAYERS = 3;
 
-class GameEnviroment {
+export default class GameEnviroment {
     #deck = [];
     #board = [];
     #players = [];
@@ -283,4 +283,3 @@ class GameEnviroment {
 }
 
 
-module.exports = GameEnviroment;

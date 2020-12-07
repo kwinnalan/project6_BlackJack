@@ -1,21 +1,19 @@
-var express = require("express");
-var path = require("path");
+const EXPRESS = require("express");
+const PATH = require("path");
 
 
-var routes = require("./routes");
+const ROUTES = require("./routes");
 
-var app = express();
+const APP = EXPRESS();
 
 
-app.set("port", process.env.PORT || 3000);
-app.set("views", path.join(__dirname, "public/views"));
-app.use('/public', express.static(path.join(__dirname, 'public')));
-app.set("view engine", "ejs");
+APP.set("port", process.env.PORT || 3000);
+APP.set("views", PATH.join(__dirname, "public/views"));
+APP.use('/public', EXPRESS.static(PATH.join(__dirname, 'public')));
+APP.set("view engine", "ejs");
 
-app.use(routes);
+APP.use(ROUTES);
 
-app.listen(app.get("port"), function(){
-    console.log("Server Started on port " + app.get("port"));
+APP.listen(APP.get("port"), function(){
+    console.log("Server Started on port " + APP.get("port"));
 });
-
-
