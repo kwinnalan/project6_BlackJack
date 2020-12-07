@@ -18,30 +18,23 @@ export default class Player {
         console.log(`Card for whoGoesFirst: ${this.startCard}`);
     }
 
-        async #getName() {
+        #getName() {
             let name;
-            let input;
-            await document.getElementById('submitBtn').addEventListener("click",function () {
-                input = document.getElementById('nameInput').value;
-                console.log("name" + input);
-            });
+            let input = 'Player';
+            // document.getElementById('').addEventListener("click",function () {
+            //     input = document.getElementById('betCoins').value;
+            //     console.log("inside promise.." + input);
             name = input;
             return name;
         }
 
 
 
-          #getCoins(){
+         #getCoins(){
             let coins;
             let input;
-
             do {
             input = 10;//prompt("Enter the number of coins (5-1000)");
-                 document.getElementById('submitBtn').addEventListener("click",function () {
-                    input = document.getElementById('coinsInput').value;
-                    console.log("name" + input);
-                });
-                coins = input;
                 //input = PROMPT.question(`Player, enter how many coins (must be between 5 and 1,000): `);
             coins = parseInt(input);
             } while (coins < 5 || coins > 1000 || isNaN(input));

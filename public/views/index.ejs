@@ -2,58 +2,82 @@
 
 <body>
 
-<h1>inBetween!</h1>
-<p>This is a card game where your card must be "inBetween" the two board cards!</p>
+<h1>BlackJack! </h1>
+<p>Try to get close to 21 without going over!</p>
 <div class="card-deck">
-<div class="card">
-    <img class="card-img-top" id= "boardCard1" src="/public/images/cards/cardBack.png" alt="Card image">
+<div class="card" id="dCard1">
+    <img class="card-img-top" id= "dealerCard1" src="/public/images/cards/cardBack.png" alt="Card image">
     <div class="card-body">
-        <p>Board Card</p>
+        <p>Dealer Card</p>
     </div>
 </div>
 
-<div class="card">
-    <img class="card-img-top" id= "yourCard" src="/public/images/cards/cardBack.png" alt="Card image">
+<div class="card" id="dCard2">
+    <img class="card-img-top" id= "dealerCard2" src="/public/images/cards/cardBack.png" alt="Card image">
     <div class="card-body">
-        <p id= "yourCard">Your Card</p>
+        <p>Dealer Card</p>
     </div>
 </div>
-<div class="card">
-    <img class="card-img-top" id= "boardCard2" src="/public/images/cards/cardBack.png" alt="Card image">
+
+<div class="card" id="dCard3">
+    <img class="card-img-top" id= "dealerCard3" src="/public/images/cards/cardBack.png" alt="Card image">
     <div class="card-body">
-        <p>Board Card</p>
+        <p>Dealer Card</p>
     </div>
 </div>
-        <div class="card bg-success">
-            <div class="card-body text-center">
-                <p id="greenCardText">in inBetween each payer gets a chance to bet if their card is going to be between the two board cards</p>
-            </div>
-            <p id= "greenCardTextBottom">Needs 3 players, would you like to play?</p>
-        </div>
+<div class="card" id="dCard4">
+    <img class="card-img-top" id= "dealerCard4" src="/public/images/cards/cardBack.png" alt="Card image">
+    <div class="card-body">
+        <p>Dealer Card</p>
     </div>
+</div>
+<div class="card" id="dCard5">
+    <img class="card-img-top" id= "dealerCard5" src="/public/images/cards/cardBack.png" alt="Card image">
+    <div class="card-body">
+        <p>Dealer Card</p>
+    </div>
+</div>
+<div class="card" id="yCard1">
+    <img class="card-img-top" id= "yourCard1" src="/public/images/cards/cardBack.png" alt="Card image">
+    <div class="card-body">
+        <p>Your Card</p>
+    </div>
+</div>
+<div class="card" id="yCard2">
+    <img class="card-img-top" id= "yourCard1" src="/public/images/cards/cardBack.png" alt="Card image">
+    <div class="card-body">
+        <p>Your Card</p>
+    </div>
+</div>
+<div class="card" id="yCard3">
+    <img class="card-img-top" id= "yourCard1" src="/public/images/cards/cardBack.png" alt="Card image">
+    <div class="card-body">
+        <p>Your Card</p>
+    </div>
+</div>
+<div class="card" id="yCard4">
+    <img class="card-img-top" id= "yourCard1" src="/public/images/cards/cardBack.png" alt="Card image">
+    <div class="card-body">
+        <p>Your Card</p>
+    </div>
+</div>
+<div class="card" id="yCard5">
+    <img class="card-img-top" id= "yourCard1" src="/public/images/cards/cardBack.png" alt="Card image">
+    <div class="card-body">
+        <p>Your Card</p>
+    </div>
+</div>
 
 <button id = "playBtn" type="button" class="btn btn-success">Play</button>
 
-<div id="playerInputs" style="display:none">
-<h2>Player Enter your Info: </h2>
-<form >
-  Name: <input type="text" name="name" id = "nameInput"><br>
-  Coins: <input type="number" name="coins" id= "coinsInput"><br><br>
-<button id = "submitBtn" type="button" class="btn btn-success">Enter</button>
-</form>
-<div class="progress">
-  <div class="progress-bar progress-bar-striped" id= "progressBar" style="width:0%"></div>
-</div>
-</div>
-
- <div id="betOrQuit" style= "display: none">
-<h2>Player it is your turn! Bet or quit?</h2>
-<button id = "betBtn" type="button" class="btn btn-success">Bet</button>
-<button id = "quitBtn" type="button" class="btn btn-danger">Quit</button>
+ <div id="hitOrStay" style= "display: none">
+<h2>Player it is your turn!</h2>
+<button id = "betBtn" type="button" class="btn btn-success">Hit Me</button>
+<button id = "quitBtn" type="button" class="btn btn-danger">Stay</button>
 </div>
 
 <div id = "enterBet" style = "display: none">
-<h2>Enter Amount of Bet (must be at least 1 and less total pot)</h2>
+<h2>Enter Amount of Bet</h2>
 <div class="form-group">
   <label for="betCoins">Coins:</label>
   <input type="text" class="form-control" id="betCoins">
